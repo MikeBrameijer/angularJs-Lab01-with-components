@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todoApp">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title> My AngularJS App </title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+
+<body>
+  <main>
+    <div class="container" id="todoMain">
+      <div>
+        <h1>TODO List </h1>
+        <div>A place to store the things you have to do!</div>
+      </div>
+      <section ng-controller="TodoController as $ctrl">
+        <input ng-model="search" class="form-container" id="filter-id" placeholder="Filter your todo List">
+        <ol>
+          <li ng-repeat="item in $ctrl.todoArray | filter : search"
+            ng-class="{ 'completed' : (item.complete === true)}">
+            <button ng-if="item.complete === false" ng-click="$ctrl.completeTask(item)"
+                class="completeBtn">Complete</button>{{item.name}}<button ng-click="$ctrl.removeTask(item)"
+              class="xBtn">X</button>
+          </li>
+
+        </ol>
+        <form ng-submit="$ctrl.addTask($ctrl.newTodo)">
+          <!-- i want to know more about how its knows it has been submitted. i removed type submit from the button and it works, so how does it know its submitted -->
+          <input ng-model="$ctrl.newTodo" class="form-container" id="add-id" placeholder="Add your to do" />
+          <button type="submit" ng-disabled="!$ctrl.newTodo" class="button" id="addBtn">Add</button>
+        </form>
+
+      </section>
+    </div>
+
+  </main>
+  <script src="https://code.angularjs.org/1.7.8/angular.js"></script>
+  <script src="app.module.js"></script>
+  <script src="app.controller.js"></script>
+</body>
+
+</html>
